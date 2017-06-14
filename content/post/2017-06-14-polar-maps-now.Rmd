@@ -30,15 +30,16 @@ Here they are:
 ## install.packages("sf")
 ## install.packages("rnaturalearth")
 
-## 2. sf is a package for map data manipulation and transformation
-library(sf)
+## 2. sp and rgdal provide map data manipulation and transformation
+library(sp)
+library(rgdal)
 
 ## 3. a PROJ.4 'crs' string is one way to specifying the parameters for a projection
-crs <- st_crs("+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs")
+crs <- CRS("+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs")
 
 ## 4. the rnaturalearth package includes a number of in-built map data sets
 library(rnaturalearth)
-coast <- ne_coastline(returnclass = "sf")
+coast <- ne_coastline(returnclass = "sp")
 
 ```
 
@@ -53,20 +54,75 @@ This is not what we want.
 
 ```{r}
 plot(coast)
-st_crs(coast)
+proj4string(coast)
 ```
 
-This map layer is "unprojected", it uses a "longitude-latitude" coordinate system. This is not what we want but it's absolutely critical that we and (our software) know precisely what coordinate system the data is already in. 
+This map layer is "unprojected", it uses a "longitude-latitude" coordinate system. This is not what we want but it's absolutely critical that we (and our software) know precisely what coordinate system the data is already in. 
 
-We can transform from one coordinate system to another use `sf::st_transform`. 
+We can transform from one coordinate system to another using `sp::spTransform` (this is the part where 'rgdal' is required, behind the scenes it does the work to interpret the 'crs' and transform the coordinates). The result is a replacement of the complicated Spatial object with an exactly the same complicated object with just the coordinates transformed, and the metadata updated. If anything goes wrong the process will throw and error and fail completely. 
 
 ```{r}
-pcoast <- st_transform(coast, crs)
+pcoast <- spTransform(coast, crs)
 plot(pcoast)
 ```
 
-This is the part of the story where we have to know more details than we'd really like. Our data have *metadata* (a.k.a. *attributes*, *fields*, *columns*, *variables*) called 'scalerank' and 'featurecla'. We have to drop these data for our simple plot mechanism to ignore them, which we can do permanently or on-the-fly with `st_geometry`. 
+ 
+ Now that we have prototyped the workflow we can experiment with the projection to choose what we want. 
+
+By chaining the tasks together we can interactively see the result of choosing a new specification for the projection quickly. 
 
 ```{r}
-plot(st_geometry(pcoast))
+crs <- CRS("+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs")
+plot(spTransform(coast, crs))
+
+```
+
+Central longitude or latitude of the projection. 
+
+```{r}
+## change the lon_0 parameter, it's  rotation
+crs <- CRS("+proj=laea +lat_0=-90 +lon_0=10 +datum=WGS84 +no_defs")
+plot(spTransform(coast, crs))
+
+```
+
+Change the datum. 
+
+```{r}
+## a new datum changes the relative locations
+crs <- CRS("+proj=laea +lat_0=-90 +lon_0=10 +ellps=sphere")
+plot(spTransform(coast, crs))
+axis(1)
+```
+
+Change the family. 
+
+```{r}
+## a new projection family is completely different
+crs <- CRS("+proj=lcca +lat_0=-90 +lon_0=10 +datum=WGS84")
+plot(spTransform(coast, crs))
+```
+
+A projection "family" is particular choice of mathematical compromises, choose some mixed bag of area, distance, and shape. The parameters of the central longitude and latitude specify the orientation of the geographic earth with respect to that projection. Other parameters such as false eastings and northings '+x_0/+y_' exist for convenience, to push the map in two directions in the plane to avoid negative numbers. Again other parameters are more substantive, they affect the orientation and detail of the surface onto which the data is projected, for example does the cone glance the globe at a tangent point or does it intersect at two latitudes (thereby reducing the "edge effect" that would other reduce the region within the magic zone of "nice conformal"). 
+
+
+```{r}
+## a new projection family is completely different
+crs <- CRS("+proj=lcca +lat_0=-90 +lon_0=10 +datum=WGS84")
+plot(spTransform(coast, crs))
+```
+
+
+
+Some projection choices cause problems, though this takes us into deeper issues that we reserve for another post. 
+
+```{r}
+## a new projection family is completely different
+crs <- CRS("+proj=ortho +lat_0=-90 +lon_0=10 +datum=WGS84")
+try(spTransform(coast, crs))
+
+## a new projection family is completely different
+crs <- CRS("+proj=merc +lat_0=-90 +lon_0=10 +datum=WGS84")
+plot(spTransform(coast, crs))
+
 ```

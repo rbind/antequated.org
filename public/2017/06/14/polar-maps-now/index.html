@@ -33,13 +33,13 @@
 <meta name="twitter:title" content="polar maps now!"/>
 <meta name="twitter:description" content="Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sf is a package for map data manipulation and transformation library(sf) ## Linking to GEOS 3."/>
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1."/>
 
 
         <meta property="og:title" content="polar maps now!" />
 <meta property="og:description" content="Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sf is a package for map data manipulation and transformation library(sf) ## Linking to GEOS 3." />
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/2017/06/14/polar-maps-now/" />
 
@@ -62,11 +62,11 @@ a data manipulation and visualization environment coordinate transformation tool
 <meta itemprop="name" content="polar maps now!">
 <meta itemprop="description" content="Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sf is a package for map data manipulation and transformation library(sf) ## Linking to GEOS 3.">
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1.">
 
 
 <meta itemprop="dateModified" content="2017-06-14T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="307">
+<meta itemprop="wordCount" content="679">
 
 
 
@@ -382,15 +382,23 @@ a data manipulation and visualization environment coordinate transformation tool
 ## install.packages(&quot;sf&quot;)
 ## install.packages(&quot;rnaturalearth&quot;)
 
-## 2. sf is a package for map data manipulation and transformation
-library(sf)</code></pre>
-<pre><code>## Linking to GEOS 3.5.1, GDAL 2.1.2, proj.4 4.9.3</code></pre>
+## 2. sp and rgdal provide map data manipulation and transformation
+library(sp)</code></pre>
+<pre><code>## Loading required package: methods</code></pre>
+<pre class="r"><code>library(rgdal)</code></pre>
+<pre><code>## rgdal: version: 1.2-7, (SVN revision 660)
+##  Geospatial Data Abstraction Library extensions to R successfully loaded
+##  Loaded GDAL runtime: GDAL 2.1.2, released 2016/10/24
+##  Path to GDAL shared files: /usr/share/gdal/2.1
+##  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
+##  Path to PROJ.4 shared files: (autodetected)
+##  Linking to sp version: 1.2-4</code></pre>
 <pre class="r"><code>## 3. a PROJ.4 &#39;crs&#39; string is one way to specifying the parameters for a projection
-crs &lt;- st_crs(&quot;+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs&quot;)
+crs &lt;- CRS(&quot;+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs&quot;)
 
 ## 4. the rnaturalearth package includes a number of in-built map data sets
 library(rnaturalearth)
-coast &lt;- ne_coastline(returnclass = &quot;sf&quot;)</code></pre>
+coast &lt;- ne_coastline(returnclass = &quot;sp&quot;)</code></pre>
 <p>This is a huge topic, and all of these four components are both crucially important to our quest of making a map. The ways in which these four components are provided and carried out however is completely open.</p>
 <div id="make-a-map-already" class="section level2">
 <h2>Make a map already</h2>
@@ -398,23 +406,51 @@ coast &lt;- ne_coastline(returnclass = &quot;sf&quot;)</code></pre>
 <p>This is not what we want.</p>
 <pre class="r"><code>plot(coast)</code></pre>
 <p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<pre class="r"><code>st_crs(coast)</code></pre>
-<pre><code>## $epsg
-## [1] 4326
-## 
-## $proj4string
-## [1] &quot;+proj=longlat +datum=WGS84 +no_defs&quot;
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;crs&quot;</code></pre>
-<p>This map layer is “unprojected”, it uses a “longitude-latitude” coordinate system. This is not what we want but it’s absolutely critical that we and (our software) know precisely what coordinate system the data is already in.</p>
-<p>We can transform from one coordinate system to another use <code>sf::st_transform</code>.</p>
-<pre class="r"><code>pcoast &lt;- st_transform(coast, crs)
+<pre class="r"><code>proj4string(coast)</code></pre>
+<pre><code>## [1] &quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</code></pre>
+<p>This map layer is “unprojected”, it uses a “longitude-latitude” coordinate system. This is not what we want but it’s absolutely critical that we (and our software) know precisely what coordinate system the data is already in.</p>
+<p>We can transform from one coordinate system to another using <code>sp::spTransform</code> (this is the part where ‘rgdal’ is required, behind the scenes it does the work to interpret the ‘crs’ and transform the coordinates). The result is a replacement of the complicated Spatial object with an exactly the same complicated object with just the coordinates transformed, and the metadata updated. If anything goes wrong the process will throw and error and fail completely.</p>
+<pre class="r"><code>pcoast &lt;- spTransform(coast, crs)
 plot(pcoast)</code></pre>
 <p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>This is the part of the story where we have to know more details than we’d really like. Our data have <em>metadata</em> (a.k.a. <em>attributes</em>, <em>fields</em>, <em>columns</em>, <em>variables</em>) called ‘scalerank’ and ‘featurecla’. We have to drop these data for our simple plot mechanism to ignore them, which we can do permanently or on-the-fly with <code>st_geometry</code>.</p>
-<pre class="r"><code>plot(st_geometry(pcoast))</code></pre>
+<p>Now that we have prototyped the workflow we can experiment with the projection to choose what we want.</p>
+<p>By chaining the tasks together we can interactively see the result of choosing a new specification for the projection quickly.</p>
+<pre class="r"><code>crs &lt;- CRS(&quot;+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs&quot;)
+plot(spTransform(coast, crs))</code></pre>
 <p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Central longitude or latitude of the projection.</p>
+<pre class="r"><code>## change the lon_0 parameter, it&#39;s  rotation
+crs &lt;- CRS(&quot;+proj=laea +lat_0=-90 +lon_0=10 +datum=WGS84 +no_defs&quot;)
+plot(spTransform(coast, crs))</code></pre>
+<p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Change the datum.</p>
+<pre class="r"><code>## a new datum changes the relative locations
+crs &lt;- CRS(&quot;+proj=laea +lat_0=-90 +lon_0=10 +ellps=sphere&quot;)
+plot(spTransform(coast, crs))
+axis(1)</code></pre>
+<p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Change the family.</p>
+<pre class="r"><code>## a new projection family is completely different
+crs &lt;- CRS(&quot;+proj=lcca +lat_0=-90 +lon_0=10 +datum=WGS84&quot;)
+plot(spTransform(coast, crs))</code></pre>
+<p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>A projection “family” is particular choice of mathematical compromises, choose some mixed bag of area, distance, and shape. The parameters of the central longitude and latitude specify the orientation of the geographic earth with respect to that projection. Other parameters such as false eastings and northings ‘+x_0/+y_’ exist for convenience, to push the map in two directions in the plane to avoid negative numbers. Again other parameters are more substantive, they affect the orientation and detail of the surface onto which the data is projected, for example does the cone glance the globe at a tangent point or does it intersect at two latitudes (thereby reducing the “edge effect” that would other reduce the region within the magic zone of “nice conformal”).</p>
+<pre class="r"><code>## a new projection family is completely different
+crs &lt;- CRS(&quot;+proj=lcca +lat_0=-90 +lon_0=10 +datum=WGS84&quot;)
+plot(spTransform(coast, crs))</code></pre>
+<p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Some projection choices cause problems, though this takes us into deeper issues that we reserve for another post.</p>
+<pre class="r"><code>## a new projection family is completely different
+crs &lt;- CRS(&quot;+proj=ortho +lat_0=-90 +lon_0=10 +datum=WGS84&quot;)
+try(spTransform(coast, crs))</code></pre>
+<pre><code>## Warning in .spTransform_Line(input[[i]], to_args = to_args, from_args =
+## from_args, : 12 projected point(s) not finite</code></pre>
+<pre><code>## non finite transformation detected:
+## [1] -6.197885 53.867565       Inf       Inf</code></pre>
+<pre class="r"><code>## a new projection family is completely different
+crs &lt;- CRS(&quot;+proj=merc +lat_0=-90 +lon_0=10 +datum=WGS84&quot;)
+plot(spTransform(coast, crs))</code></pre>
+<p><img src="../../../../post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 </div>
 

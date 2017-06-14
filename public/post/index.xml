@@ -19,7 +19,7 @@
       <guid>/2017/06/14/polar-maps-now/</guid>
       <description>Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&amp;quot;sf&amp;quot;) ## install.packages(&amp;quot;rnaturalearth&amp;quot;) ## 2. sf is a package for map data manipulation and transformation library(sf) ## Linking to GEOS 3.</description>
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&amp;quot;sf&amp;quot;) ## install.packages(&amp;quot;rnaturalearth&amp;quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1.</description>
     </item>
     
     <item>
