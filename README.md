@@ -9,7 +9,7 @@ The domain name "antequated.org" is not yet configured. This live website can be
 
 1. Install [blogdown](https://github.com/rstudio/blogdown)
 2. Clone this repo (use RStudio, New Project, Version Control. 
-3. Create new content, e.g. `blogdown::new_post("check this awwweeesssoommmeee maaaaap duuude!!!!!", rmd = TRUE)`
+3. Create new content, e.g. `blogdown::new_post("polar maps now!", rmd = TRUE)`
 4. `blogdown::serve_site()`
 
 See the support for blogdown/rbind: 
