@@ -6,10 +6,21 @@
     <description>Recent content on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jun 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>polar maps now!</title>
+      <link>/2017/06/14/polar-maps-now/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/06/14/polar-maps-now/</guid>
+      <description>Map projections are a hot topic! What do we need?
+a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&amp;quot;sf&amp;quot;) ## install.packages(&amp;quot;rnaturalearth&amp;quot;) ## 2. sf is a package for map data manipulation and transformation library(sf) ## Linking to GEOS 3.</description>
+    </item>
     
     <item>
       <title>hello-antequated</title>

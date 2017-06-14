@@ -1,0 +1,67 @@
+---
+title: polar maps now!
+author: 'Michael Sumner'
+date: '2017-06-14'
+slug: polar-maps-now
+categories: []
+tags: []
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+---
+
+
+
+<div id="map-projections-are-a-hot-topic" class="section level1">
+<h1>Map projections are a hot topic!</h1>
+<p>What do we need?</p>
+<ol style="list-style-type: decimal">
+<li>a data manipulation and visualization environment</li>
+<li>coordinate transformation tools</li>
+<li>a <em>coordinate reference system</em> (‘crs’)</li>
+<li>data</li>
+</ol>
+<p>Here they are:</p>
+<pre class="r"><code>## 1. R is a data manipulation and visualization environment
+
+## R can do work with map projections using extension packages
+## install.packages(&quot;sf&quot;)
+## install.packages(&quot;rnaturalearth&quot;)
+
+## 2. sf is a package for map data manipulation and transformation
+library(sf)</code></pre>
+<pre><code>## Linking to GEOS 3.5.1, GDAL 2.1.2, proj.4 4.9.3</code></pre>
+<pre class="r"><code>## 3. a PROJ.4 &#39;crs&#39; string is one way to specifying the parameters for a projection
+crs &lt;- st_crs(&quot;+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs&quot;)
+
+## 4. the rnaturalearth package includes a number of in-built map data sets
+library(rnaturalearth)
+coast &lt;- ne_coastline(returnclass = &quot;sf&quot;)</code></pre>
+<p>This is a huge topic, and all of these four components are both crucially important to our quest of making a map. The ways in which these four components are provided and carried out however is completely open.</p>
+<div id="make-a-map-already" class="section level2">
+<h2>Make a map already</h2>
+<p>We already have R, we have tools for map data, we have a crs.</p>
+<p>This is not what we want.</p>
+<pre class="r"><code>plot(coast)</code></pre>
+<p><img src="/post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>st_crs(coast)</code></pre>
+<pre><code>## $epsg
+## [1] 4326
+## 
+## $proj4string
+## [1] &quot;+proj=longlat +datum=WGS84 +no_defs&quot;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;crs&quot;</code></pre>
+<p>This map layer is “unprojected”, it uses a “longitude-latitude” coordinate system. This is not what we want but it’s absolutely critical that we and (our software) know precisely what coordinate system the data is already in.</p>
+<p>We can transform from one coordinate system to another use <code>sf::st_transform</code>.</p>
+<pre class="r"><code>pcoast &lt;- st_transform(coast, crs)
+plot(pcoast)</code></pre>
+<p><img src="/post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>This is the part of the story where we have to know more details than we’d really like. Our data have <em>metadata</em> (a.k.a. <em>attributes</em>, <em>fields</em>, <em>columns</em>, <em>variables</em>) called ‘scalerank’ and ‘featurecla’. We have to drop these data for our simple plot mechanism to ignore them, which we can do permanently or on-the-fly with <code>st_geometry</code>.</p>
+<pre class="r"><code>plot(st_geometry(pcoast))</code></pre>
+<p><img src="/post/2017-06-14-polar-maps-now_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>

@@ -1,0 +1,72 @@
+---
+title: polar maps now!
+author: 'Michael Sumner'
+date: '2017-06-14'
+slug: polar-maps-now
+categories: []
+tags: []
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+---
+
+# Map projections are a hot topic!
+
+What do we need? 
+
+1. a data manipulation and visualization environment
+2. coordinate transformation tools
+3. a *coordinate reference system* ('crs')
+4. data
+
+Here they are: 
+
+```{r}
+## 1. R is a data manipulation and visualization environment
+
+## R can do work with map projections using extension packages
+## install.packages("sf")
+## install.packages("rnaturalearth")
+
+## 2. sf is a package for map data manipulation and transformation
+library(sf)
+
+## 3. a PROJ.4 'crs' string is one way to specifying the parameters for a projection
+crs <- st_crs("+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs")
+
+## 4. the rnaturalearth package includes a number of in-built map data sets
+library(rnaturalearth)
+coast <- ne_coastline(returnclass = "sf")
+
+```
+
+This is a huge topic, and all of these four components are both crucially important to our quest of making a map. The ways in which these four
+components are provided and carried out however is completely open. 
+
+## Make a map already
+
+We already have R, we have tools for map data, we have a crs. 
+
+This is not what we want. 
+
+```{r}
+plot(coast)
+st_crs(coast)
+```
+
+This map layer is "unprojected", it uses a "longitude-latitude" coordinate system. This is not what we want but it's absolutely critical that we and (our software) know precisely what coordinate system the data is already in. 
+
+We can transform from one coordinate system to another use `sf::st_transform`. 
+
+```{r}
+pcoast <- st_transform(coast, crs)
+plot(pcoast)
+```
+
+This is the part of the story where we have to know more details than we'd really like. Our data have *metadata* (a.k.a. *attributes*, *fields*, *columns*, *variables*) called 'scalerank' and 'featurecla'. We have to drop these data for our simple plot mechanism to ignore them, which we can do permanently or on-the-fly with `st_geometry`. 
+
+```{r}
+plot(st_geometry(pcoast))
+```
