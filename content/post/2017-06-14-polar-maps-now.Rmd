@@ -126,3 +126,20 @@ crs <- CRS("+proj=merc +lat_0=-90 +lon_0=10 +datum=WGS84")
 plot(spTransform(coast, crs))
 
 ```
+
+## What's next?
+
+We have only just scratched the surface, the next steps we need might include the following. 
+
+* a local, specific, extent (this is surprisingly difficult to get right)
+* a "graticule", i.e. lines of constant longitude and latitude
+* other data on the map, again this can be suprisingly complicated
+* labels
+* aesthetics and scales for the data on the map
+* accoutrements (scale bars and north arrow and the fancy white-black margin real maps use)
+
+
+Every one of these requires painstaking, back and forth experimentation and decisions. It's just not possible to automate everything about this, so the more familiarity you have with the component tools in the process the better your maps will be. I always refer to it as "chicken-egg", first we choose an extent or let the data define the extent of the map frame, but then we want either more or less and have to modify the initial choice or heuristic, and this then impacts subtly on other choices we had to make. You have to go back and forth a bit. 
+
+
+I'm kidding about the last one, for those I think it's best to find a cartographic tool or just draw it using Microsoft Paint. I think they are pretty pointless and will end up sucking a lot of time. A scale bar is not completely accurate unless you orient it within the map in a place where linear distance on the ground correspods to equal spacing in the map (this is rare), and the north arrow is either totally redundant or hopelessly inaccurate. This is a rich are of discussion for maps, and exploring what's wrong with north arrows, scale bars leads us into techniques for drawing graticules, reprojecting map data composed of dicsrete, straight-line segments,  depicting vector fields, and calculating the [Tissot Indicatrix](https://github.com/mdsumner/tissot).  
