@@ -40,5 +40,15 @@ a data manipulation and visualization environment coordinate transformation tool
       <description>This is a blogdown website dedicated to producing maps nearer the poles. The antequated philosophy rails against the injustices of tropical-bias and rejects any notion of &amp;ldquo;up&amp;rdquo; or &amp;ldquo;down&amp;rdquo;, or indeed any kind of stability at all.</description>
     </item>
     
+    <item>
+      <title>Making a general Southern Ocean map</title>
+      <link>/2017/03/08/general-southern-ocean-map/</link>
+      <pubDate>Wed, 08 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/03/08/general-southern-ocean-map/</guid>
+      <description>Editorial note: This work is carried out using generally available R packages from CRAN. The content in this document was prepared before it was published, and in this form it may again be updated. There’s also a step where some CCAMLR polygons are read in from shapefiles that must be manually downloaded. In future we can remove this requirement and make things much easier. 
+Get ready Required R packages.</description>
+    </item>
+    
   </channel>
 </rss>
