@@ -29,11 +29,17 @@
 
 <meta name="twitter:text:title" content="Get antequated with SOmap"/>
 <meta name="twitter:title" content="Get antequated with SOmap"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+Behold SOmap.
+ SOmap To install the SOmap package use
+remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see the package readme and documentation for further details."/>
 
 
         <meta property="og:title" content="Get antequated with SOmap" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+Behold SOmap.
+ SOmap To install the SOmap package use
+remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see the package readme and documentation for further details." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/2019/03/20/get-antequated-with-somap/" />
 
@@ -54,11 +60,14 @@
 
         
 <meta itemprop="name" content="Get antequated with SOmap">
-<meta itemprop="description" content="">
+<meta itemprop="description" content="Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+Behold SOmap.
+ SOmap To install the SOmap package use
+remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see the package readme and documentation for further details.">
 
 
 <meta itemprop="dateModified" content="2019-03-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="wordCount" content="541">
 
 
 
@@ -362,7 +371,87 @@
     
 
     <div id="content">
-        
+        <div id="polar-maps-are-still-hot" class="section level2">
+<h2>Polar maps are still hot!</h2>
+<p>Last time we <a href="http://antequated.org/2017/06/14/polar-maps-now/">got this far</a> by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then <a href="https://github.com/Maschette">Dale Maschette</a> discussed <a href="https://twitter.com/StephdeSilva/status/1017631191854297088">these problems</a> at <a href="https://user2018.r-project.org">useR Brisbane 2018</a> and <a href="https://twitter.com/Dale_Masch/status/1017693776452546560">stirred up</a> multiple <a href="https://twitter.com/databsurdist/status/1107797978423558149">discussions on twitter</a> about the joys of polar maps.</p>
+<p>Behold SOmap.</p>
+</div>
+<div id="somap" class="section level2">
+<h2>SOmap</h2>
+<p>To install the <a href="https://github.com/AustralianAntarcticDivision/SOmap">SOmap</a> package use</p>
+<pre class="r"><code>remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;)</code></pre>
+<p>and see the <a href="https://australianantarcticdivision.github.io/SOmap/">package readme and documentation</a> for further details.</p>
+<p>Creating a polar map is as easy as the following.</p>
+<pre class="r"><code>library(SOmap)</code></pre>
+<pre><code>## Loading required package: raster</code></pre>
+<pre><code>## Loading required package: sp</code></pre>
+<pre class="r"><code>pmap &lt;- SOmap()</code></pre>
+<pre><code>## Loading required namespace: rgeos</code></pre>
+<pre class="r"><code>pmap</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/polar-go-1.png" width="672" /></p>
+<p>To add our own data to the map we can use the <code>SOplot()</code> function, by default this function is geared to adding data to our existing map.</p>
+<pre class="r"><code>pmap
+longitudes &lt;- seq(-180, 175, by = 5)
+latitudes &lt;- approx(c(-48, -88, -48), n = length(longitudes))$y
+SOplot(longitudes, latitudes, pch = 1:25)</code></pre>
+<pre><code>## No projection provided, assuming longlat</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/polar-add-1.png" width="672" /></p>
+<p>The great feature here is that we only needed our data, points in longitude and latitude and a single call to <code>SOplot()</code> - the data is automtically added to the plot in the right way.</p>
+<p>We can also add spatial types to the plot.</p>
+<p>To start afresh from <code>SOmap()</code> above we can <code>print()</code> the object.</p>
+<pre class="r"><code>print(pmap)
+SOplot(SOmap_data$seaice_oct)
+SOplot(SOmap_data$seaice_feb, col = &quot;firebrick&quot;, lwd = 2, lty = 2)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/other-types-1.png" width="672" /></p>
+<p>In the previous post we had these desired features.</p>
+<ul>
+<li>a local, specific, extent (this is surprisingly difficult to get right)</li>
+<li>a “graticule”, i.e. lines of constant longitude and latitude</li>
+<li>other data on the map, again this can be suprisingly complicated</li>
+<li>labels</li>
+<li>aesthetics and scales for the data on the map</li>
+<li>accoutrements (scale bars and north arrow and the fancy white-black margin real maps use)</li>
+</ul>
+<p>The extent is controlled by the data we give <code>SOauto_map()</code>, this also adapts the map projection in use to best suit the data given.</p>
+<pre class="r"><code>grid &lt;- expand.grid(x= seq(105, 165, by = 5), y = seq(-75, -38, by = 8))
+amap &lt;- SOauto_map(grid$x, grid$y)</code></pre>
+<p>By default, the input data are plotted as points and as joined lines. The lines don’t make sense here, so turn them off.</p>
+<pre class="r"><code>(amap &lt;- SOauto_map(grid$x, grid$y, input_lines = FALSE))</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/no-lines-1.png" width="672" /></p>
+<p>As well as our very contrived set of grid points, more realistic data works as well.</p>
+<pre class="r"><code>track &lt;- SOmap::SOmap_data$mirounga_leonina
+trackmap &lt;-  SOauto_map(track$lon, track$lat, pcol = &quot;yellow&quot;)
+trackmap</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/tracks-1.png" width="672" /></p>
+<p>While <code>SOplot()</code> provides the arguments for the plot method in use, <code>SOmap()</code> and <code>SOauto_map()</code> provide special argumens that match their base equivalents for points and lines, i.e. <code>pcol</code> and <code>lcol</code> respectively.</p>
+<p>We see immediately that the seal heading west raced home somewhat more quickly than its easterly counterpart.</p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, pcol = colourvalues::colour_values(track$date))</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/tracktime-1.png" width="672" /></p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:raster&#39;:
+## 
+##     intersect, select, union</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>track %&gt;% group_by(id) %&gt;% 
+  summarize(start = min(date), end =max(date), west = min(lon), east = max(lon))</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   id         start               end                  west  east
+##   &lt;chr&gt;      &lt;dttm&gt;              &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt;
+## 1 ct96-05-13 2013-03-15 11:21:41 2013-09-18 16:44:36  69.7 116. 
+## 2 ct96-09-13 2013-03-06 23:01:11 2013-08-24 23:37:25  31.3  70.6</code></pre>
+</div>
+<div id="next-steps" class="section level2">
+<h2>Next steps</h2>
+<p>…</p>
+</div>
+
     </div>
 
     <footer>

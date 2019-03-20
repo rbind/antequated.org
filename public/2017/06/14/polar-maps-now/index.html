@@ -33,13 +33,13 @@
 <meta name="twitter:title" content="polar maps now!"/>
 <meta name="twitter:description" content="Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1."/>
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) library(rgdal) ## rgdal: version: 1."/>
 
 
         <meta property="og:title" content="polar maps now!" />
 <meta property="og:description" content="Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1." />
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) library(rgdal) ## rgdal: version: 1." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/2017/06/14/polar-maps-now/" />
 
@@ -62,11 +62,11 @@ a data manipulation and visualization environment coordinate transformation tool
 <meta itemprop="name" content="polar maps now!">
 <meta itemprop="description" content="Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1.">
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&quot;sf&quot;) ## install.packages(&quot;rnaturalearth&quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) library(rgdal) ## rgdal: version: 1.">
 
 
 <meta itemprop="dateModified" content="2017-06-14T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="977">
+<meta itemprop="wordCount" content="1070">
 
 
 
@@ -209,6 +209,10 @@ a data manipulation and visualization environment coordinate transformation tool
                     
                 
 
+                
+                    <li>
+                        <a href="../../../../2019/03/20/get-antequated-with-somap/"><p>Get antequated with SOmap</p></a>
+                    </li>
                 
                     <li>
                         <a href="../../../../2017/06/14/polar-maps-now/"><p>polar maps now!</p></a>
@@ -383,23 +387,24 @@ a data manipulation and visualization environment coordinate transformation tool
 ## install.packages(&quot;rnaturalearth&quot;)
 
 ## 2. sp and rgdal provide map data manipulation and transformation
-library(sp)</code></pre>
-<pre><code>## Loading required package: methods</code></pre>
-<pre class="r"><code>library(rgdal)</code></pre>
-<pre><code>## rgdal: version: 1.2-7, (SVN revision 660)
+library(sp)
+library(rgdal)</code></pre>
+<pre><code>## rgdal: version: 1.4-3, (SVN revision 828)
 ##  Geospatial Data Abstraction Library extensions to R successfully loaded
-##  Loaded GDAL runtime: GDAL 2.1.2, released 2016/10/24
-##  Path to GDAL shared files: /usr/share/gdal/2.1
-##  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
+##  Loaded GDAL runtime: GDAL 2.4.0, released 2018/12/14
+##  Path to GDAL shared files: /usr/share/gdal
+##  GDAL binary built with GEOS: TRUE 
+##  Loaded PROJ.4 runtime: Rel. 5.2.0, September 15th, 2018, [PJ_VERSION: 520]
 ##  Path to PROJ.4 shared files: (autodetected)
-##  Linking to sp version: 1.2-4</code></pre>
+##  Linking to sp version: 1.3-1</code></pre>
 <pre class="r"><code>## 3. a PROJ.4 &#39;crs&#39; string is one way to specifying the parameters for a projection
 crs &lt;- CRS(&quot;+proj=laea +lat_0=-90 +lon_0=142 +datum=WGS84 +no_defs&quot;)
 
 ## 4. the rnaturalearth package includes a number of in-built map data sets
 library(rnaturalearth)
 coast &lt;- ne_coastline(returnclass = &quot;sp&quot;)</code></pre>
-<p>This is a huge topic, and all of these four components are both crucially important to our quest of making a map. The ways in which these four components are provided and carried out however is completely open.</p>
+<p>This is a huge topic, and all of these four components are both crucially important to our quest of making a map. The ways in which these four
+components are provided and carried out however is completely open.</p>
 <div id="make-a-map-already" class="section level2">
 <h2>Make a map already</h2>
 <p>We already have R, we have tools for map data, we have a crs.</p>
@@ -446,7 +451,21 @@ try(spTransform(coast, crs))</code></pre>
 <pre><code>## Warning in .spTransform_Line(input[[i]], to_args = to_args, from_args =
 ## from_args, : 12 projected point(s) not finite</code></pre>
 <pre><code>## non finite transformation detected:
-## [1] -6.197885 53.867565       Inf       Inf</code></pre>
+##            [,1]     [,2] [,3] [,4]
+##  [1,] -6.197885 53.86757  Inf  Inf
+##  [2,] -6.032985 53.15319  Inf  Inf
+##  [3,] -6.788857 52.26012  Inf  Inf
+##  [4,] -8.561617 51.66930  Inf  Inf
+##  [5,] -9.977086 51.82045  Inf  Inf
+##  [6,] -9.166283 52.86463  Inf  Inf
+##  [7,] -9.688525 53.88136  Inf  Inf
+##  [8,] -8.327987 54.66452  Inf  Inf
+##  [9,] -7.572168 55.13162  Inf  Inf
+## [10,] -6.733847 55.17286  Inf  Inf
+## [11,] -5.661949 54.55460  Inf  Inf
+## [12,] -6.197885 53.86757  Inf  Inf
+## Error in .spTransform_Line(input[[i]], to_args = to_args, from_args = from_args,  : 
+##   failure in Lines 2 Line 1 points 1:2:3:4:5:6:7:8:9:10:11:12</code></pre>
 <pre class="r"><code>## a new projection family is completely different
 crs &lt;- CRS(&quot;+proj=merc +lat_0=-90 +lon_0=10 +datum=WGS84&quot;)
 plot(spTransform(coast, crs))</code></pre>
@@ -492,6 +511,9 @@ plot(spTransform(coast, crs))</code></pre>
     
 
     
+        <li><a href="../../../../2019/03/20/get-antequated-with-somap/"
+                class="button big next">Get antequated with SOmap</a></li>
+    
 </ul>
 
 
@@ -526,6 +548,20 @@ plot(spTransform(coast, crs))</code></pre>
                     
                 
 
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="../../../../2019/03/20/get-antequated-with-somap/">Get antequated with SOmap</a></h3>
+                                
+                                    
+                                
+                                <time class="published" datetime=
+                                    '2019-03-20'>
+                                    March 20, 2019</time>
+                            </header>
+                        </article>
+                    </li>
                 
                     <li>
                         <article>
@@ -577,13 +613,23 @@ plot(spTransform(coast, crs))</code></pre>
                                     
                                 
                                 <time class="published" datetime=
-                                    '2017-06-14'>
-                                    June 14, 2017</time>
+                                    '2019-03-20'>
+                                    March 20, 2019</time>
                             </header>
                         </article>
                     </li>
                 
 
+                
+                    <li>
+                        <ul class="actions">
+                            <li><a href=
+                            
+                                "/post/"
+                            
+                            class="button">View more posts</a></li>
+                        </ul>
+                    </li>
                 
             </ul>
         </section>

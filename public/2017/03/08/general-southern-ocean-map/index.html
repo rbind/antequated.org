@@ -63,7 +63,7 @@ Get ready Required R packages.">
 
 
 <meta itemprop="dateModified" content="2017-03-08T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1153">
+<meta itemprop="wordCount" content="1168">
 
 
 
@@ -206,6 +206,10 @@ Get ready Required R packages.">
                     
                 
 
+                
+                    <li>
+                        <a href="../../../../2019/03/20/get-antequated-with-somap/"><p>Get antequated with SOmap</p></a>
+                    </li>
                 
                     <li>
                         <a href="../../../../2017/06/14/polar-maps-now/"><p>polar maps now!</p></a>
@@ -369,8 +373,14 @@ Get ready Required R packages.">
 <p>Required R packages.</p>
 <pre class="r"><code>library(graticule)
 library(orsifronts)
-library(raadtools)
-library(raster)
+library(raadtools)</code></pre>
+<pre><code>## global option &#39;raadfiles.data.roots&#39; set:
+## &#39;/rdsi/PRIVATE/raad/data
+##  /rdsi/PRIVATE/raad/data_local
+##  /rdsi/PRIVATE/raad/data_staging
+##  /rdsi/PRIVATE/raad/data_deprecated
+##  /rdsi/PUBLIC/raad/data&#39;</code></pre>
+<pre class="r"><code>library(raster)
 library(RColorBrewer)
 library(rgdal)
 library(rgeos)
@@ -407,7 +417,7 @@ pg &lt;- spTransform(g, CRS(pprj))</code></pre>
 <pre class="r"><code>#Read in shapefile. NOTE: Automatically read in as SpatialPolygonsDataFrame
 ccamlr &lt;- readOGR(&quot;../../data-raw/CCAMLR/gis_subareas&quot;, &quot;statistical_areasPolygon&quot;)</code></pre>
 <pre><code>## OGR data source with driver: ESRI Shapefile 
-## Source: &quot;../../data-raw/CCAMLR/gis_subareas&quot;, layer: &quot;statistical_areasPolygon&quot;
+## Source: &quot;/perm_storage/home/mdsumner/Git/antequated.org/data-raw/CCAMLR/gis_subareas&quot;, layer: &quot;statistical_areasPolygon&quot;
 ## with 19 features
 ## It has 15 fields</code></pre>
 <pre class="r"><code>#Re-project
@@ -569,6 +579,20 @@ legend(x = 0.57, y = 0.67, c(&quot;Subtropical Front&quot;, &quot;Subantarctic F
                     <li>
                         <article>
                             <header>
+                                <h3><a href="../../../../2019/03/20/get-antequated-with-somap/">Get antequated with SOmap</a></h3>
+                                
+                                    
+                                
+                                <time class="published" datetime=
+                                    '2019-03-20'>
+                                    March 20, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
                                 <h3><a href="../../../../2017/06/14/polar-maps-now/">polar maps now!</a></h3>
                                 
                                     
@@ -616,13 +640,23 @@ legend(x = 0.57, y = 0.67, c(&quot;Subtropical Front&quot;, &quot;Subantarctic F
                                     
                                 
                                 <time class="published" datetime=
-                                    '2017-06-14'>
-                                    June 14, 2017</time>
+                                    '2019-03-20'>
+                                    March 20, 2019</time>
                             </header>
                         </article>
                     </li>
                 
 
+                
+                    <li>
+                        <ul class="actions">
+                            <li><a href=
+                            
+                                "/post/"
+                            
+                            class="button">View more posts</a></li>
+                        </ul>
+                    </li>
                 
             </ul>
         </section>

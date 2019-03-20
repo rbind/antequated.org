@@ -20,8 +20,14 @@ linktitle: ''
 <p>Required R packages.</p>
 <pre class="r"><code>library(graticule)
 library(orsifronts)
-library(raadtools)
-library(raster)
+library(raadtools)</code></pre>
+<pre><code>## global option &#39;raadfiles.data.roots&#39; set:
+## &#39;/rdsi/PRIVATE/raad/data
+##  /rdsi/PRIVATE/raad/data_local
+##  /rdsi/PRIVATE/raad/data_staging
+##  /rdsi/PRIVATE/raad/data_deprecated
+##  /rdsi/PUBLIC/raad/data&#39;</code></pre>
+<pre class="r"><code>library(raster)
 library(RColorBrewer)
 library(rgdal)
 library(rgeos)
@@ -58,7 +64,7 @@ pg &lt;- spTransform(g, CRS(pprj))</code></pre>
 <pre class="r"><code>#Read in shapefile. NOTE: Automatically read in as SpatialPolygonsDataFrame
 ccamlr &lt;- readOGR(&quot;../../data-raw/CCAMLR/gis_subareas&quot;, &quot;statistical_areasPolygon&quot;)</code></pre>
 <pre><code>## OGR data source with driver: ESRI Shapefile 
-## Source: &quot;../../data-raw/CCAMLR/gis_subareas&quot;, layer: &quot;statistical_areasPolygon&quot;
+## Source: &quot;/perm_storage/home/mdsumner/Git/antequated.org/data-raw/CCAMLR/gis_subareas&quot;, layer: &quot;statistical_areasPolygon&quot;
 ## with 19 features
 ## It has 15 fields</code></pre>
 <pre class="r"><code>#Re-project

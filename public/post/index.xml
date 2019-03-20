@@ -6,10 +6,22 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Get antequated with SOmap</title>
+      <link>/2019/03/20/get-antequated-with-somap/</link>
+      <pubDate>Wed, 20 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/03/20/get-antequated-with-somap/</guid>
+      <description>Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+Behold SOmap.
+ SOmap To install the SOmap package use
+remotes::install_github(&amp;quot;AustralianAntarcticDivision/SOmap&amp;quot;) and see the package readme and documentation for further details.</description>
+    </item>
     
     <item>
       <title>polar maps now!</title>
@@ -19,7 +31,7 @@
       <guid>/2017/06/14/polar-maps-now/</guid>
       <description>Map projections are a hot topic! What do we need?
 a data manipulation and visualization environment coordinate transformation tools a coordinate reference system (‘crs’) data  Here they are:
-## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&amp;quot;sf&amp;quot;) ## install.packages(&amp;quot;rnaturalearth&amp;quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) ## Loading required package: methods library(rgdal) ## rgdal: version: 1.</description>
+## 1. R is a data manipulation and visualization environment ## R can do work with map projections using extension packages ## install.packages(&amp;quot;sf&amp;quot;) ## install.packages(&amp;quot;rnaturalearth&amp;quot;) ## 2. sp and rgdal provide map data manipulation and transformation library(sp) library(rgdal) ## rgdal: version: 1.</description>
     </item>
     
     <item>
