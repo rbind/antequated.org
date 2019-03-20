@@ -14,6 +14,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r eval=TRUE,include=FALSE}
+library(dplyr)
+library(SOmap)
+```
 
 ## Polar maps are still hot! 
 

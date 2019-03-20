@@ -27,10 +27,8 @@ editor_options:
 <pre class="r"><code>remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;)</code></pre>
 <p>and see the <a href="https://australianantarcticdivision.github.io/SOmap/">package readme and documentation</a> for further details.</p>
 <p>Creating a polar map is as easy as the following.</p>
-<pre class="r"><code>library(SOmap)</code></pre>
-<pre><code>## Loading required package: raster</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
-<pre class="r"><code>pmap &lt;- SOmap()</code></pre>
+<pre class="r"><code>library(SOmap)
+pmap &lt;- SOmap()</code></pre>
 <pre><code>## Loading required namespace: rgeos</code></pre>
 <pre class="r"><code>pmap</code></pre>
 <p><img src="/post/2019-03-20-get-antequated-with-somap_files/figure-html/polar-go-1.png" width="672" /></p>
@@ -72,19 +70,8 @@ trackmap</code></pre>
 <p>We see immediately that the seal heading west raced home somewhat more quickly than its easterly counterpart.</p>
 <pre class="r"><code>SOauto_map(track$lon, track$lat, pcol = colourvalues::colour_values(track$date))</code></pre>
 <p><img src="/post/2019-03-20-get-antequated-with-somap_files/figure-html/tracktime-1.png" width="672" /></p>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:raster&#39;:
-## 
-##     intersect, select, union</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>track %&gt;% group_by(id) %&gt;% 
+<pre class="r"><code>library(dplyr)
+track %&gt;% group_by(id) %&gt;% 
   summarize(start = min(date), end =max(date), west = min(lon), east = max(lon))</code></pre>
 <pre><code>## # A tibble: 2 x 5
 ##   id         start               end                  west  east
