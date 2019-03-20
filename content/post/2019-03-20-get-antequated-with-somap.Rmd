@@ -1,0 +1,110 @@
+---
+title: Get antequated with SOmap
+author: null
+date: '2019-03-20'
+slug: get-antequated-with-somap
+categories: []
+tags: []
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Polar maps are still hot! 
+
+Last time we [got this far](http://antequated.org/2017/06/14/polar-maps-now/) by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then [Dale Maschette](https://github.com/Maschette) discussed [these problems](https://twitter.com/StephdeSilva/status/1017631191854297088) at [useR Brisbane 2018](https://user2018.r-project.org) and [stirred up](https://twitter.com/Dale_Masch/status/1017693776452546560) multiple [discussions on twitter](https://twitter.com/databsurdist/status/1107797978423558149) about the joys of polar maps. 
+
+Behold SOmap. 
+
+
+## SOmap
+
+To install the [SOmap](https://github.com/AustralianAntarcticDivision/SOmap) package use
+
+```{r install, eval=FALSE}
+remotes::install_github("AustralianAntarcticDivision/SOmap")
+```
+and see the [package readme and documentation](https://australianantarcticdivision.github.io/SOmap/) for further details. 
+
+Creating a polar map is as easy as the following. 
+
+```{r polar-go}
+library(SOmap)
+pmap <- SOmap()
+pmap
+```
+
+To add our own data to the map we can use the `SOplot()` function, by default this function is geared to adding data to our existing map. 
+
+```{r polar-add}
+pmap
+longitudes <- seq(-180, 175, by = 5)
+latitudes <- approx(c(-48, -88, -48), n = length(longitudes))$y
+SOplot(longitudes, latitudes, pch = 1:25)
+```
+
+The great feature here is that we only needed our data, points in longitude and latitude and a single call to `SOplot()` - the data is automtically added to the plot in the right way. 
+
+We can also add spatial types to the plot. 
+
+To start afresh from `SOmap()` above we can `print()` the object. 
+
+```{r other-types}
+print(pmap)
+SOplot(SOmap_data$seaice_oct)
+SOplot(SOmap_data$seaice_feb, col = "firebrick", lwd = 2, lty = 2)
+
+```
+
+In the previous post we had these desired features. 
+
+* a local, specific, extent (this is surprisingly difficult to get right)
+* a "graticule", i.e. lines of constant longitude and latitude
+* other data on the map, again this can be suprisingly complicated
+* labels
+* aesthetics and scales for the data on the map
+* accoutrements (scale bars and north arrow and the fancy white-black margin real maps use)
+
+
+The extent is controlled by the data we give `SOauto_map()`, this also adapts the map projection in use to best suit the data given. 
+
+```{r automap}
+grid <- expand.grid(x= seq(105, 165, by = 5), y = seq(-75, -38, by = 8))
+amap <- SOauto_map(grid$x, grid$y)
+```
+
+By default, the input data are plotted as points and as joined lines. The lines don't make sense here, so turn them off. 
+
+```{r no-lines}
+(amap <- SOauto_map(grid$x, grid$y, input_lines = FALSE))
+```
+
+As well as our very contrived set of grid points, more realistic data works as well. 
+
+```{r tracks}
+track <- SOmap::SOmap_data$mirounga_leonina
+trackmap <-  SOauto_map(track$lon, track$lat, pcol = "yellow")
+trackmap
+```
+
+While `SOplot()` provides the arguments for the plot method in use, `SOmap()` and `SOauto_map()` provide special argumens that match their base equivalents for points and lines, i.e. `pcol` and `lcol` respectively. 
+
+We see immediately that the seal heading west raced home somewhat more quickly than its easterly counterpart. 
+
+```{r tracktime}
+SOauto_map(track$lon, track$lat, pcol = colourvalues::colour_values(track$date))
+
+library(dplyr)
+track %>% group_by(id) %>% 
+  summarize(start = min(date), end =max(date), west = min(lon), east = max(lon))
+```
+
+
+## Next steps
+
+...
