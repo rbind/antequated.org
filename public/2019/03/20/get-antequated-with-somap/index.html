@@ -29,16 +29,16 @@
 
 <meta name="twitter:text:title" content="Get antequated with SOmap"/>
 <meta name="twitter:title" content="Get antequated with SOmap"/>
-<meta name="twitter:description" content="Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+<meta name="twitter:description" content="Polar maps! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
 Behold SOmap.
- SOmap To install the SOmap package use
+SOmap::SOmap() ## Loading required namespace: rgeos  SOmap To install the SOmap package use
 remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see the package readme and documentation for further details."/>
 
 
         <meta property="og:title" content="Get antequated with SOmap" />
-<meta property="og:description" content="Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+<meta property="og:description" content="Polar maps! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
 Behold SOmap.
- SOmap To install the SOmap package use
+SOmap::SOmap() ## Loading required namespace: rgeos  SOmap To install the SOmap package use
 remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see the package readme and documentation for further details." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/2019/03/20/get-antequated-with-somap/" />
@@ -60,14 +60,14 @@ remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see t
 
         
 <meta itemprop="name" content="Get antequated with SOmap">
-<meta itemprop="description" content="Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+<meta itemprop="description" content="Polar maps! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
 Behold SOmap.
- SOmap To install the SOmap package use
+SOmap::SOmap() ## Loading required namespace: rgeos  SOmap To install the SOmap package use
 remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see the package readme and documentation for further details.">
 
 
 <meta itemprop="dateModified" content="2019-03-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="487">
+<meta itemprop="wordCount" content="757">
 
 
 
@@ -121,7 +121,7 @@ remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see t
                 </li>
             
                 <li>
-                    <a href="https://github.com/DataScienceHobart/2017-02-03-graphics-imas">
+                    <a href="https://github.com/AustralianAntarcticDivision/SOmap">
                         GitHub
                     </a>
                 </li>
@@ -180,7 +180,7 @@ remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see t
                     </li>
                 
                     <li>
-                        <a href="https://github.com/DataScienceHobart/2017-02-03-graphics-imas">
+                        <a href="https://github.com/AustralianAntarcticDivision/SOmap">
                             <h3>
                                 
                                 GitHub
@@ -371,10 +371,13 @@ remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see t
     
 
     <div id="content">
-        <div id="polar-maps-are-still-hot" class="section level2">
-<h2>Polar maps are still hot!</h2>
+        <div id="polar-maps" class="section level2">
+<h2>Polar maps!</h2>
 <p>Last time we <a href="http://antequated.org/2017/06/14/polar-maps-now/">got this far</a> by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then <a href="https://github.com/Maschette">Dale Maschette</a> discussed <a href="https://twitter.com/StephdeSilva/status/1017631191854297088">these problems</a> at <a href="https://user2018.r-project.org">useR Brisbane 2018</a> and <a href="https://twitter.com/Dale_Masch/status/1017693776452546560">stirred up</a> multiple <a href="https://twitter.com/databsurdist/status/1107797978423558149">discussions on twitter</a> about the joys of polar maps.</p>
 <p>Behold SOmap.</p>
+<pre class="r"><code>SOmap::SOmap()</code></pre>
+<pre><code>## Loading required namespace: rgeos</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/SOmap-1.png" width="672" /></p>
 </div>
 <div id="somap" class="section level2">
 <h2>SOmap</h2>
@@ -383,9 +386,8 @@ remotes::install_github(&quot;AustralianAntarcticDivision/SOmap&quot;) and see t
 <p>and see the <a href="https://australianantarcticdivision.github.io/SOmap/">package readme and documentation</a> for further details.</p>
 <p>Creating a polar map is as easy as the following.</p>
 <pre class="r"><code>library(SOmap)
-pmap &lt;- SOmap()</code></pre>
-<pre><code>## Loading required namespace: rgeos</code></pre>
-<pre class="r"><code>pmap</code></pre>
+pmap &lt;- SOmap()
+pmap</code></pre>
 <p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/polar-go-1.png" width="672" /></p>
 <p>To add our own data to the map we can use the <code>SOplot()</code> function, by default this function is geared to adding data to our existing map.</p>
 <pre class="r"><code>pmap
@@ -394,9 +396,9 @@ latitudes &lt;- approx(c(-48, -88, -48), n = length(longitudes))$y
 SOplot(longitudes, latitudes, pch = 1:25)</code></pre>
 <pre><code>## No projection provided, assuming longlat</code></pre>
 <p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/polar-add-1.png" width="672" /></p>
-<p>The great feature here is that we only needed our data, points in longitude and latitude and a single call to <code>SOplot()</code> - the data is automtically added to the plot in the right way.</p>
-<p>We can also add spatial types to the plot.</p>
+<p>The great feature here is that we only needed our data, points in longitude and latitude and a single call to <code>SOplot()</code> - the data is automtically added to the plot in the right way and works much like <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/plot.html">base plot()</a>.</p>
 <p>To start afresh from <code>SOmap()</code> above we can <code>print()</code> the object.</p>
+<p>We can also add spatial types to the plot.</p>
 <pre class="r"><code>print(pmap)
 SOplot(SOmap_data$seaice_oct)
 SOplot(SOmap_data$seaice_feb, col = &quot;firebrick&quot;, lwd = 2, lty = 2)</code></pre>
@@ -434,8 +436,32 @@ track %&gt;% group_by(id) %&gt;%
 ## 1 ct96-05-13 2013-03-15 11:21:41 2013-09-18 16:44:36  69.7 116. 
 ## 2 ct96-09-13 2013-03-06 23:01:11 2013-08-24 23:37:25  31.3  70.6</code></pre>
 </div>
-<div id="next-steps" class="section level2">
-<h2>Next steps</h2>
+<div id="exploring-projections" class="section level2">
+<h2>Exploring projections</h2>
+<p>The default projection family is <code>+proj=stere</code>. It is a <em>family</em> because while this is a Polar Stereographic projection the actual details include a central longitude, central latitude, latitude of true-scale, ellipsoid and datum, and many others. If we change any of these parameters from their defaults we have a completely different map projection. There is a literal infinity of possible Polar Stereographic projections, though in practice we tend to use only a handful.</p>
+<p>There are other families, Lambert Azimuthal Equal Area <code>+proj=laea</code>, Lambert Conformal Conic <code>+proj=lcc</code>, Gnomonic <code>+proj=gnom</code>, Mercator <code>+proj=merc</code>, Equidistant Cylindrical <code>+proj=eqc</code>, Mollweide <code>+proj=moll</code>, Oblique Mercator <code>+proj=omerc</code>, and <a href="https://proj4.org/operations/projections/index.html">many more</a>. Another good catalogue of projections is the <a href="https://github.com/d3/d3-geo-projection#projections">d3 software readme</a>.</p>
+<p>Some of these familes may be specified simply by name, and the map will be automatically configured to centre on the input data.</p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, family = &quot;lcc&quot;)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/auto-proj-1.png" width="672" /></p>
+<pre class="r"><code>#title(main = &quot;Lambert Conformal Conic&quot;)
+
+SOauto_map(track$lon, track$lat, family = &quot;laea&quot;)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/auto-proj-2.png" width="672" /></p>
+<p>We can control the map projection centre if required.</p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, family = &quot;laea&quot;, centre_lon = 120, centre_lat = -80)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/custom-centre-1.png" width="672" /></p>
+<p>Not everything will work, or work well - but this is an easy way to explore what kind of projection is sensible for our data.</p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, family = &quot;moll&quot;)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, family = &quot;gnom&quot;)</code></pre>
+<pre><code>## Warning in rgdal::rawTransform(projfrom, projto, nrow(xy), xy[, 1], xy[, :
+## 225 projected point(s) not finite</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, family = &quot;merc&quot;)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
+<p>Some projections require extra parameters, and those can be controlled precisely by setting <code>family</code> directly as a full projection string. In this case the <code>centre_lon</code> and <code>centre_lat</code> values will be ignored.</p>
+<pre class="r"><code>SOauto_map(track$lon, track$lat, family = &quot;+proj=omerc +lon_1=40 +lon_2=120 +lonc=90 +lat_1=-40 +lat_2=-70&quot;)</code></pre>
+<p><img src="../../../../post/2019-03-20-get-antequated-with-somap_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>…</p>
 </div>
 
@@ -612,7 +638,7 @@ track %&gt;% group_by(id) %&gt;%
                 
             </ul>
 
-            <p class="copyright">&copy; A Hugo website. Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a>. Ported by <a href="//github.com/jpescador" target="_blank">Julio Pescador</a>. Powered by <a href="//gohugo.io" target="_blank">Hugo</a></p>
+            <p class="copyright">&copy; Antequated - maps for the rest of us. Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a>. Ported by <a href="//github.com/jpescador" target="_blank">Julio Pescador</a>. Powered by <a href="//gohugo.io" target="_blank">Hugo</a></p>
         </section>
 
 </section>

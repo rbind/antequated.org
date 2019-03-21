@@ -1,7 +1,7 @@
 baseurl = "/"
 relativeurls = true
 languageCode = "en-us"
-title = "A Hugo website"
+title = "Antequated - maps for the rest of us"
 theme = "hugo-future-imperfect"
 googleAnalytics = ""
 disqusShortname = ""
@@ -15,7 +15,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     url = "/about/"
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/DataScienceHobart/2017-02-03-graphics-imas"
+    url = "https://github.com/AustralianAntarcticDivision/SOmap"
 [[menu.main]]
     name = "Twitter"
     url = "https://twitter.com/AusAntarctic"

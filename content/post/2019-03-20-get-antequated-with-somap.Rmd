@@ -1,7 +1,7 @@
 ---
 title: Get antequated with SOmap
 author: null
-date: '2019-03-20'
+date: '2019-03-21'
 slug: get-antequated-with-somap
 categories: []
 tags: []
@@ -19,11 +19,15 @@ library(dplyr)
 library(SOmap)
 ```
 
-## Polar maps are still hot! 
+## Polar maps! 
 
-Last time we [got this far](http://antequated.org/2017/06/14/polar-maps-now/) by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then [Dale Maschette](https://github.com/Maschette) discussed [these problems](https://twitter.com/StephdeSilva/status/1017631191854297088) at [useR Brisbane 2018](https://user2018.r-project.org) and [stirred up](https://twitter.com/Dale_Masch/status/1017693776452546560) multiple [discussions on twitter](https://twitter.com/databsurdist/status/1107797978423558149) about the joys of polar maps. 
+Last time we [got this far](https://smuggler-deer-77415.netlify.com/2017/06/14/polar-maps-now/) by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then [Dale Maschette](https://github.com/Maschette) discussed [these problems](https://twitter.com/StephdeSilva/status/1017631191854297088) at [useR Brisbane 2018](https://user2018.r-project.org) and [stirred up](https://twitter.com/Dale_Masch/status/1017693776452546560) multiple [discussions on twitter](https://twitter.com/databsurdist/status/1107797978423558149) about the joys of polar maps. 
 
 Behold SOmap. 
+
+```{r SOmap}
+SOmap::SOmap()
+```
 
 
 ## SOmap
@@ -52,11 +56,12 @@ latitudes <- approx(c(-48, -88, -48), n = length(longitudes))$y
 SOplot(longitudes, latitudes, pch = 1:25)
 ```
 
-The great feature here is that we only needed our data, points in longitude and latitude and a single call to `SOplot()` - the data is automtically added to the plot in the right way. 
+The great feature here is that we only needed our data, points in longitude and latitude and a single call to `SOplot()` - the data is automtically added to the plot in the right way and works much like [base plot()](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/plot.html). 
 
-We can also add spatial types to the plot. 
 
 To start afresh from `SOmap()` above we can `print()` the object. 
+
+We can also add spatial types to the plot. 
 
 ```{r other-types}
 print(pmap)
@@ -109,6 +114,47 @@ track %>% group_by(id) %>%
 ```
 
 
-## Next steps
+## Exploring projections
+
+The default projection family is `+proj=stere`.  It is a *family* because while this is a Polar Stereographic projection the actual details include a central longitude, central latitude, latitude of true-scale, ellipsoid and datum, and many others. If we change any of these  parameters from their defaults we have a completely different map projection. There is a literal infinity of possible Polar Stereographic projections, though in practice we tend to use only a handful. 
+
+There are other families, Lambert Azimuthal Equal Area `+proj=laea`, Lambert Conformal Conic `+proj=lcc`, Gnomonic `+proj=gnom`, Mercator `+proj=merc`, Equidistant Cylindrical `+proj=eqc`, Mollweide `+proj=moll`, Oblique Mercator `+proj=omerc`, and [many more](https://proj4.org/operations/projections/index.html).  Another good catalogue of projections is the [d3 software readme](https://github.com/d3/d3-geo-projection#projections). 
+
+Some of these familes may be specified simply by name, and the map will be automatically configured to centre on the input data. 
+
+```{r auto-proj}
+SOauto_map(track$lon, track$lat, family = "lcc")
+#title(main = "Lambert Conformal Conic")
+
+SOauto_map(track$lon, track$lat, family = "laea")
+
+```
+
+We can control the map projection centre if required. 
+
+```{r custom-centre}
+SOauto_map(track$lon, track$lat, family = "laea", centre_lon = 120, centre_lat = -80)
+
+```
+
+Not everything will work, or work well - but this is an easy way to explore what kind of projection is sensible for our data. 
+
+```{r}
+SOauto_map(track$lon, track$lat, family = "moll")
+
+SOauto_map(track$lon, track$lat, family = "gnom")
+
+SOauto_map(track$lon, track$lat, family = "merc")
+
+```
+
+Some projections require extra parameters, and those can be controlled precisely by setting `family` directly as a full projection string.  In this case the `centre_lon` and `centre_lat` values will be ignored. 
+
+```{r}
+SOauto_map(track$lon, track$lat, family = "+proj=omerc +lon_1=40 +lon_2=120 +lonc=90 +lat_1=-40 +lat_2=-70")
+
+```
+
+
 
 ...

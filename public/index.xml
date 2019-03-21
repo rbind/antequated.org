@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Hugo website</title>
+    <title>Antequated - maps for the rest of us</title>
     <link>/</link>
-    <description>Recent content on A Hugo website</description>
+    <description>Recent content on Antequated - maps for the rest of us</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Get antequated with SOmap</title>
-      <link>/2019/03/20/get-antequated-with-somap/</link>
-      <pubDate>Wed, 20 Mar 2019 00:00:00 +0000</pubDate>
+      <link>/2019/03/21/get-antequated-with-somap/</link>
+      <pubDate>Thu, 21 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/03/20/get-antequated-with-somap/</guid>
-      <description>Polar maps are still hot! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
+      <guid>/2019/03/21/get-antequated-with-somap/</guid>
+      <description>Polar maps! Last time we got this far by creating a very simplistic polar map and discussing some of the difficulties in customizing and finishing it. Since then Dale Maschette discussed these problems at useR Brisbane 2018 and stirred up multiple discussions on twitter about the joys of polar maps.
 Behold SOmap.
- SOmap To install the SOmap package use
+SOmap::SOmap() ## Loading required namespace: rgeos  SOmap To install the SOmap package use
 remotes::install_github(&amp;quot;AustralianAntarcticDivision/SOmap&amp;quot;) and see the package readme and documentation for further details.</description>
     </item>
     
